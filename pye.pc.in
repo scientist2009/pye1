@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+pye_create_mb=pye-create-mb
+pye_create_umb=pye-create-umb
+pye_parse_umb=pye-parse-umb
+
+Name: Pye
+Description: Chinese Pinyin Engine
+Version: @VERSION@
+Libs: -L${libdir} -lpye
+Cflags: -I${includedir}/pye-0.2
