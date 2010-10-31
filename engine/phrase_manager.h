@@ -64,7 +64,7 @@ class PhraseProxyStorage {
  public:
   PhraseProxyStorage() : phrase_proxy_site_(NULL), phrase_proxy_list_(NULL) {}
   ~PhraseProxyStorage() {
-    DELETE_LIST_DATA(*phrase_proxy_list_, PhraseProxy);
+    STL_DELETE_DATA(*phrase_proxy_list_, std::list<PhraseProxy *>);
     delete phrase_proxy_list_;
   }
 

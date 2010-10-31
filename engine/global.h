@@ -12,15 +12,31 @@
 #ifndef PYE_ENGINE_GLOBAL_H_
 #define PYE_ENGINE_GLOBAL_H_
 
-#define N_ELEMENTS(ArrayName) \
-            (sizeof(ArrayName)/sizeof((ArrayName)[0]))
+#define N_ARRAY_ELEMENTS(ArrayName) \
+    (sizeof(ArrayName)/sizeof((ArrayName)[0]))
 
-#define DELETE_LIST_DATA(ListName,TypeName) \
+#define STL_DELETE_DATA(Name,Type) \
 do { \
-  for (std::list<TypeName *>::iterator iterator = (ListName).begin(); \
-       iterator != (ListName).end(); \
+  for (Type::iterator iterator = (Name).begin(); \
+       iterator != (Name).end(); \
        ++iterator) \
     delete (*iterator); \
+} while (0)
+
+#define STL_FREE_KEY(Name,Type) \
+do { \
+  for (Type::iterator iterator = (Name).begin(); \
+       iterator != (Name).end(); \
+       ++iterator) \
+    free(iterator->first); \
+} while (0)
+
+#define STL_FREE_VALUE(Name,Type) \
+do { \
+  for (Type::iterator iterator = (Name).begin(); \
+       iterator != (Name).end(); \
+       ++iterator) \
+    free(iterator->second); \
 } while (0)
 
 #endif  // PYE_ENGINE_GLOBAL_H_

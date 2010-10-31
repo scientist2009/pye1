@@ -12,7 +12,10 @@
 #ifndef PYE_ENGINE_OUTPUT_H_
 #define PYE_ENGINE_OUTPUT_H_
 
-#include <config.h>
+#ifdef HAVE_CONFIG_H
+  #include <config.h>
+#endif
+
 #include <err.h>
 #include <stdio.h>
 

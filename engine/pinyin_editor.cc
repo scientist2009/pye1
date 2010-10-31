@@ -393,8 +393,8 @@ void PinyinEditor::GetPagePhrase(int pagesize,
  */
 void PinyinEditor::GetDynamicPhrase(std::list<const PhraseDatum *> *list) {
   std::list<PhraseDatum *> phrase_datum_list;
-  DynamicPhrase dynamic_phrase;
-  dynamic_phrase.GetDynamicPhrase(pinyin_table_.c_str(), &phrase_datum_list);
+  DynamicPhrase *dynamic_phrase = DynamicPhrase::GetInstance();
+  dynamic_phrase->GetDynamicPhrase(pinyin_table_.c_str(), &phrase_datum_list);
 
   for (std::list<PhraseDatum *>::iterator iterator = phrase_datum_list.begin();
        iterator != phrase_datum_list.end();
@@ -484,7 +484,7 @@ const PhraseDatum *PinyinEditor::GetComposePhrase() {
   if (cache_phrase_list_.empty())
     delete phrase_datum_list.front();
   phrase_datum_list.pop_front();
-  DELETE_LIST_DATA(phrase_datum_list, PhraseDatum);
+  STL_DELETE_DATA(phrase_datum_list, std::list<PhraseDatum *>);
 
   /* 加入缓冲链表 */
   cache_phrase_list_.push_back(phrase_datum);
@@ -821,7 +821,7 @@ void PinyinEditor::ClearCharsProxy() {
  * 清除已接受的词语数据.
  */
 void PinyinEditor::ClearAcceptedPhraseList() {
-  DELETE_LIST_DATA(accepted_phrase_list_, PhraseDatum);
+  STL_DELETE_DATA(accepted_phrase_list_, std::list<PhraseDatum *>);
   accepted_phrase_list_.clear();
 }
 
@@ -829,7 +829,7 @@ void PinyinEditor::ClearAcceptedPhraseList() {
  * 清除缓冲的词语数据.
  */
 void PinyinEditor::ClearCachePhraseList() {
-  DELETE_LIST_DATA(cache_phrase_list_, PhraseDatum);
+  STL_DELETE_DATA(cache_phrase_list_, std::list<PhraseDatum *>);
   cache_phrase_list_.clear();
 }
 
@@ -840,7 +840,7 @@ void PinyinEditor::ClearPhraseStorageList() {
   if (!phrase_storage_list_)
     return;
 
-  DELETE_LIST_DATA(*phrase_storage_list_, PhraseProxyStorage);
+  STL_DELETE_DATA(*phrase_storage_list_, std::list<PhraseProxyStorage *>);
   delete phrase_storage_list_;
   phrase_storage_list_ = NULL;
 }

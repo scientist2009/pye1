@@ -170,7 +170,7 @@ int8_t PinyinParser::GetPinyinUnitPartsIndex(const char *pinyin) {
  * @return 总数
  */
 int8_t PinyinParser::GetPinyinUnitPartsAmount() {
-  return N_ELEMENTS(parts_array_);
+  return N_ARRAY_ELEMENTS(parts_array_);
 }
 
 /**

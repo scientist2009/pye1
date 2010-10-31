@@ -10,9 +10,43 @@
 //
 //
 #include "wrapper.h"
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
+
+/**
+ * 移除串首部的空白字符.
+ * @param s 串
+ * @return 新串
+ */
+char *strchug(char *s) {
+  const char *ptr = s;
+  for (; isspace(*ptr); ++ptr)
+    continue;
+  if (ptr != s) {
+    char *pptr = s;
+    for (; *ptr != '\0'; ++pptr, ++ptr)
+      *pptr = *ptr;
+    *pptr = '\0';
+  }
+  return s;
+}
+
+/**
+ * 移除串尾部的空白字符.
+ * @param string 串
+ * @return 新串
+ */
+char *strchomp(char *s) {
+  char *ptr = s + strlen(s) - 1;
+  for (; ptr >= s && isspace(*ptr); --ptr)
+    continue;
+  if (ptr != s)
+    *(ptr + 1) = '\0';
+  return s;
+}
 
 /**
  * 写出数据.
@@ -60,15 +94,15 @@ ssize_t xread(int fd, void *buf, size_t count) {
 
 /**
  * 拷贝文件.
- * @param src 源文件
- * @param dst 目标文件
+ * @param srcfile 源文件
+ * @param dstfile 目标文件
  * @return 结果值，0 成功;-1 失败
  */
-int xcopy(const char *src, const char *dst) {
-  int srcfd = open(src, O_RDONLY);
+int xcopy(const char *srcfile, const char *dstfile) {
+  int srcfd = open(srcfile, O_RDONLY);
   if (srcfd == -1)
     return -1;
-  int dstfd = open(dst, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+  int dstfd = open(dstfile, O_WRONLY | O_CREAT | O_TRUNC, 00644);
   if (dstfd == -1) {
     close(srcfd);
     return -1;

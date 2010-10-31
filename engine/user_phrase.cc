@@ -169,7 +169,7 @@ PhraseProxy *UserPhrase::SearchPreferPhrase(const CharsProxy *chars_proxy,
   }
   /* 删除词语 */
   phrase_list.erase(selected_iterator);
-  DELETE_LIST_DATA(phrase_list, PhraseProxy);
+  STL_DELETE_DATA(phrase_list, std::list<PhraseProxy *>);
 
   return selected_phrase_proxy;
 }

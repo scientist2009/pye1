@@ -139,7 +139,7 @@ void PhraseManager::AppendFuzzyPinyinPair(const char *unit1,
  * 清空拼音矫正对.
  */
 void PhraseManager::ClearMendPinyinPair() {
-  DELETE_LIST_DATA(mend_pair_table_, OuterMendPinyinPair);
+  STL_DELETE_DATA(mend_pair_table_, std::list<OuterMendPinyinPair *>);
   mend_pair_table_.clear();
 }
 
@@ -363,9 +363,9 @@ PhraseManager::~PhraseManager() {
   /* 备份用户词语 */
   BackupUserPhrase();
   /* 释放集合链表 */
-  DELETE_LIST_DATA(phrase_proxy_site_list_, PhraseProxySite);
+  STL_DELETE_DATA(phrase_proxy_site_list_, std::list<PhraseProxySite *>);
   /* 释放拼音矫正表 */
-  DELETE_LIST_DATA(mend_pair_table_, OuterMendPinyinPair);
+  STL_DELETE_DATA(mend_pair_table_, std::list<OuterMendPinyinPair *>);
   /* 释放模糊拼音对照表 */
   PinyinParser pinyin_parser;
   int8_t amount = pinyin_parser.GetPinyinUnitPartsAmount();

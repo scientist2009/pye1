@@ -10,10 +10,10 @@
 //
 //
 #include "dynamic_phrase.h"
+#include <errno.h>
 #include <stdio.h>
-#include <string.h>
-#include <time.h>
-#include "global.h"
+#include "output.h"
+#include "wrapper.h"
 
 /*
  * ==== 函数表(2010/10/31 16:05:09 星期日 下午) ====
@@ -47,25 +47,63 @@
  */
 
 /**
+ * 创建表达式.
+ */
+void DynamicPhrase::CreateExpression(const char *config) {
+  /* 打开配置文件 */
+  FILE *stream = fopen(config, "r");
+  if (!stream) {
+    pwarning("Fopen file \"%s\" failed, %s", config, strerror(errno));
+    return;
+  }
+
+  /* 读取文件数据、分析并添加到映射表 */
+  char *lineptr = NULL;
+  size_t n = 0;
+  while (getline(&lineptr, &n, stream) != -1) {
+    strstrip(lineptr);
+    if (*lineptr == '\0' || *lineptr == '#')
+      continue;
+    const char *ptr = strchr(lineptr, '=');
+    if (!ptr || ptr == lineptr || *(ptr + 1) == '\0')
+      continue;
+    char *key = strndup(lineptr, ptr - lineptr);
+    strchomp(key);
+    char *value = strdup(ptr + 1);
+    strchug(value);
+    expression_.insert(std::pair<char *, char *>(key, value));
+  }
+  free(lineptr);
+
+  /* 关闭文件 */
+  fclose(stream);
+}
+
+/**
  * 获取动态词语数据.
  * @param string 源串
  * @retval list 词语数据链表
  */
 void DynamicPhrase::GetDynamicPhrase(const char *string,
-                                     std::list<PhraseDatum *> *list) {
-  if (strcmp(string, "rq") == 0)
-    GetDatePhrase(list);
-  if (strcmp(string, "sj") == 0)
-    GetTimePhrase(list);
-  if (strcmp(string, "xq") == 0 || strcmp(string, "lb") == 0)
-    GetWeekPhrase(list);
+                                     std::list<PhraseDatum *> *list) const {
+  /* 定义迭代器类型 */
+  typedef std::multimap<const char *, char *, StringComparer>::iterator expression_iterator;
+
+  /* 获取所有匹配项 */
+  std::pair<expression_iterator, expression_iterator> pair =
+      expression_.equal_range((char *)string);
+  /* 创建词语对象并加入链表 */
+  for (expression_iterator iterator = pair.first; iterator != pair.second; ++iterator) {
+    PhraseDatum *phrase_datum = CreatePhraseDatum(iterator->second);
+    list->push_back(phrase_datum);
+  }
 }
 
 /**
  * 获取实例对象.
  * @return 实例对象
  */
-static DynamicPhrase *DynamicPhrase::GetInstance() {
+DynamicPhrase *DynamicPhrase::GetInstance() {
   static DynamicPhrase instance;
   return &instance;
 }

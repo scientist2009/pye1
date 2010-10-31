@@ -48,7 +48,7 @@ class PhraseLengthNode {
  public:
   PhraseLengthNode() : chars_proxy_length_(0) {}
   ~PhraseLengthNode() {
-    DELETE_LIST_DATA(data_, PhraseDatum);
+    STL_DELETE_DATA(data_, std::list<PhraseDatum *>);
   }
 
   int chars_proxy_length_;  ///< 词语的汉字代理数组的长度
@@ -62,7 +62,7 @@ class PhraseIndexNode {
  public:
   PhraseIndexNode() : chars_proxy_index_(-1) {}
   ~PhraseIndexNode() {
-    DELETE_LIST_DATA(data_, PhraseLengthNode);
+    STL_DELETE_DATA(data_, std::list<PhraseLengthNode *>);
   }
 
   int8_t chars_proxy_index_;  ///< 词语的汉字代理数组的索引
@@ -76,7 +76,7 @@ class PhraseRootNode {
  public:
   PhraseRootNode() {}
   ~PhraseRootNode() {
-    DELETE_LIST_DATA(data_, PhraseIndexNode);
+    STL_DELETE_DATA(data_, std::list<PhraseIndexNode *>);
   }
 
   std::list<PhraseIndexNode *> data_;  ///< 数据
