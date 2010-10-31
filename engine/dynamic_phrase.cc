@@ -15,17 +15,36 @@
 #include <time.h>
 #include "global.h"
 
-/**
- * 类构造函数.
+/*
+ * ==== 函数表(2010/10/31 16:05:09 星期日 下午) ====
+ * 函数                含义                举例
+ * $year              年(4位)             2010
+ * $year_yy           年(2位)             10
+ * $year_cn           年(中文4位)          二〇一〇
+ * $year_yy_cn        年(中文2位)          一〇
+ * $month             月                  10
+ * $month_mm          月(2位)             10
+ * $month_cn          月(中文)             十
+ * $day               日                  31
+ * $day_dd            日(2位)              31
+ * $day_cn            日(中文)             三十一
+ * $fullhour          时(24小时制)         16
+ * $fullhour_hh       时(2位24小时制)       16
+ * $fullhour_cn       时(中文24小时制)      十六
+ * $halfhour          时(12小时制)          4
+ * $halfhour_hh       时(2位12小时制)       04
+ * $halfhour_cn       时(中文12小时制)       四
+ * $minute            分                   5
+ * $minute_mm         分(2位)              05
+ * $minute_cn         分(中文)             五
+ * $second            秒                   9
+ * $second_ss         秒(2位)              09
+ * $second_cn         秒(中文)             九
+ * $weekday           星期                 0
+ * $weekday_cn        星期(中文)            日
+ * $ampm              AMPM                PM
+ * $ampm_cn           上午下午             下午
  */
-DynamicPhrase::DynamicPhrase() {
-}
-
-/**
- * 类析构函数.
- */
-DynamicPhrase::~DynamicPhrase() {
-}
 
 /**
  * 获取动态词语数据.
@@ -43,166 +62,23 @@ void DynamicPhrase::GetDynamicPhrase(const char *string,
 }
 
 /**
- * 获取日期动态词语数据.
- * @retval list 词语数据链表
+ * 获取实例对象.
+ * @return 实例对象
  */
-void DynamicPhrase::GetDatePhrase(std::list<PhraseDatum *> *list) {
-  /* 预备工作 */
-  CharsProxy chars_proxy[2];
-  PinyinParser pinyin_parser;
-  chars_proxy[0].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("r");
-  chars_proxy[1].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("q");
-  const int length = N_ELEMENTS(chars_proxy);
-  time_t tt = time(NULL);
-  struct tm *tm = localtime(&tt);
-
-  /* 2009年11月2日 */
-  PhraseDatum *phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%d年%d月%d日",
-                                            tm->tm_year + 1900,
-                                            tm->tm_mon + 1,
-                                            tm->tm_mday);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 2009-11-02 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%04d-%02d-%02d",
-                                            tm->tm_year + 1900,
-                                            tm->tm_mon + 1,
-                                            tm->tm_mday);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 2009.11.02 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%04d.%02d.%02d",
-                                            tm->tm_year + 1900,
-                                            tm->tm_mon + 1,
-                                            tm->tm_mday);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 11/02/2009 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%02d/%02d/%04d",
-                                            tm->tm_mon + 1,
-                                            tm->tm_mday,
-                                            tm->tm_year + 1900);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
+static DynamicPhrase *DynamicPhrase::GetInstance() {
+  static DynamicPhrase instance;
+  return &instance;
 }
 
 /**
- * 获取时间动态词语数据.
- * @retval list 词语数据链表
+ * 类构造函数.
  */
-void DynamicPhrase::GetTimePhrase(std::list<PhraseDatum *> *list) {
-  /* 预备工作 */
-  CharsProxy chars_proxy[2];
-  PinyinParser pinyin_parser;
-  chars_proxy[0].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("s");
-  chars_proxy[1].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("j");
-  const int length = N_ELEMENTS(chars_proxy);
-  time_t tt = time(NULL);
-  struct tm *tm = localtime(&tt);
-
-  /* 12时45分27秒 */
-  PhraseDatum *phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%d时%d分%d秒",
-                                            tm->tm_hour,
-                                            tm->tm_min,
-                                            tm->tm_sec);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 12:45:27 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "%02d:%02d:%02d",
-                                            tm->tm_hour,
-                                            tm->tm_min,
-                                            tm->tm_sec);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
+DynamicPhrase::DynamicPhrase() {
 }
 
 /**
- * 获取星期动态词语数据.
- * @retval list 词语数据链表
+ * 类析构函数.
  */
-void DynamicPhrase::GetWeekPhrase(std::list<PhraseDatum *> *list) {
-  /* 预备工作 */
-  CharsProxy chars_proxy[2];
-  PinyinParser pinyin_parser;
-  chars_proxy[0].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("x");
-  chars_proxy[1].major_index_ = pinyin_parser.GetPinyinUnitPartsIndex("q");
-  const int length = N_ELEMENTS(chars_proxy);
-  time_t tt = time(NULL);
-  struct tm *tm = localtime(&tt);
-
-  /* 获取数字的汉字表示 */
-  const char *week = "";
-  switch (tm->tm_wday) {
-    case 0: week = "日"; break;
-    case 1: week = "一"; break;
-    case 2: week = "二"; break;
-    case 3: week = "三"; break;
-    case 4: week = "四"; break;
-    case 5: week = "五"; break;
-    case 6: week = "六"; break;
-  }
-
-  /* 星期一 */
-  PhraseDatum *phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "星期%s", week);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 礼拜一 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "礼拜%s", week);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
-
-  /* 周一 */
-  phrase_datum = new PhraseDatum;
-  list->push_back(phrase_datum);
-  phrase_datum->chars_proxy_ = new CharsProxy[length];
-  memcpy(phrase_datum->chars_proxy_, chars_proxy, sizeof(chars_proxy));
-  phrase_datum->chars_proxy_length_ = length;
-  phrase_datum->raw_data_length_ = asprintf((char **)&phrase_datum->raw_data_,
-                                            "周%s", week);
-  phrase_datum->phrase_data_offset_ = InvalidPhraseType;
+DynamicPhrase::~DynamicPhrase() {
 }
+

@@ -19,15 +19,14 @@
  */
 class DynamicPhrase {
  public:
-  DynamicPhrase();
-  ~DynamicPhrase();
+  void
+  void GetDynamicPhrase(const char *string, std::list<PhraseDatum *> *list) const;
 
-  void GetDynamicPhrase(const char *string, std::list<PhraseDatum *> *list);
+  static DynamicPhrase *GetInstance();
 
  private:
-  void GetDatePhrase(std::list<PhraseDatum *> *list);
-  void GetTimePhrase(std::list<PhraseDatum *> *list);
-  void GetWeekPhrase(std::list<PhraseDatum *> *list);
+  DynamicPhrase();
+  ~DynamicPhrase();
 };
 
 #endif  // PYE_ENGINE_DYNAMIC_PHRASE_H_

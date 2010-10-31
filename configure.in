@@ -1,10 +1,10 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.65)
-AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(pye, 0.2.0)
-AM_CONFIG_HEADER(config.h)
+AC_INIT(pye, 0.2.1)
+AC_CONFIG_SRCDIR(config.h.in)
+AC_CONFIG_HEADERS(config.h)
+AM_INIT_AUTOMAKE(foreign dist-bzip2)
 
 # Checks for programs.
 AC_PROG_CXX
@@ -50,4 +50,6 @@ fi
 
 dnl Add the languages which your application supports here.
 
-AC_OUTPUT(pye.pc Makefile engine/Makefile test/Makefile tools/Makefile)
+AC_CONFIG_FILES(pye.pc Makefile engine/Makefile test/Makefile tools/Makefile)
+AC_OUTPUT
+
