@@ -92,6 +92,7 @@ DynamicPhrase *DynamicPhrase::GetInstance() {
  * 类构造函数.
  */
 DynamicPhrase::DynamicPhrase() {
+  RegisterFunction();
 }
 
 /**
@@ -103,6 +104,38 @@ DynamicPhrase::~DynamicPhrase() {
 
   STL_FREE_KEY(expression_, ExpressionMultimap);
   STL_FREE_VALUE(expression_, ExpressionMultimap);
+}
+
+/**
+ * 注册动态数据生成函数.
+ */
+void DynamicPhrase::RegisterFunction() {
+  function_["$year"] = &DynamicPhrase::GenerateYear;
+  function_["$year_yy"] = &DynamicPhrase::GenerateYearYY;
+  function_["$year_cn"] = &DynamicPhrase::GenerateYearCN;
+  function_["$year_yy_cn"] = &DynamicPhrase::GenerateYearYYCN;
+  function_["$month"] = &DynamicPhrase::GenerateMonth;
+  function_["$month_mm"] = &DynamicPhrase::GenerateMonthMM;
+  function_["$month_cn"] = &DynamicPhrase::GenerateMonthCN;
+  function_["$day"] = &DynamicPhrase::GenerateDay;
+  function_["$day_dd"] = &DynamicPhrase::GenerateDayDD;
+  function_["$day_cn"] = &DynamicPhrase::GenerateDayCN;
+  function_["$fullhour"] = &DynamicPhrase::GenerateFullhour;
+  function_["$fullhour_hh"] = &DynamicPhrase::GenerateFullhourHH;
+  function_["$fullhour_cn"] = &DynamicPhrase::GenerateFullhourCN;
+  function_["$halfhour"] = &DynamicPhrase::GenerateHalfhour;
+  function_["$halfhour_hh"] = &DynamicPhrase::GenerateHalfhourHH;
+  function_["$halfhour_cn"] = &DynamicPhrase::GenerateHalfhourCN;
+  function_["$minute"] = &DynamicPhrase::GenerateMinute;
+  function_["$minute_mm"] = &DynamicPhrase::GenerateMinuteMM;
+  function_["$minute_cn"] = &DynamicPhrase::GenerateMinuteCN;
+  function_["$second"] = &DynamicPhrase::GenerateSecond;
+  function_["$second_ss"] = &DynamicPhrase::GenerateSecondSS;
+  function_["$second_cn"] = &DynamicPhrase::GenerateSecondCN;
+  function_["$weekday"] = &DynamicPhrase::GenerateWeekday;
+  function_["$weekday_cn"] = &DynamicPhrase::GenerateWeekdayCN;
+  function_["$ampm"] = &DynamicPhrase::GenerateAMPM;
+  function_["$ampm_cn"] = &DynamicPhrase::GenerateAMPMCN;
 }
 
 /**
@@ -138,7 +171,8 @@ PhraseDatum *DynamicPhrase::CreatePhraseDatum(const char *expression) const {
           debris_data_length += ptr - pptr;
           debris_list.push_back(debris);
         }
-        char *debris = iterator->second();
+        GenerateDatumFunc function = iterator->second;
+        char *debris = (((DynamicPhrase *)this)->*function)();
         if (debris) {
           debris_data_length += strlen(debris);
           debris_list.push_back(debris);
@@ -228,6 +262,283 @@ char *DynamicPhrase::GenerateYearYYCN() {
   struct tm timeinfo;
   localtime_r(&tt, &timeinfo);
   return ToSimpleNumericCN(timeinfo.tm_year + 1900, 2);
+}
+
+/**
+ * 生成月.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMonth() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_mon + 1);
+  return datum;
+}
+
+/**
+ * 生成月(2位).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMonthMM() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_mon + 1);
+  return datum;
+}
+
+/**
+ * 生成月(中文).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMonthCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  return ToComplexNumericCN(timeinfo.tm_mon + 1);
+}
+
+/**
+ * 生成日.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateDay() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_mday);
+  return datum;
+}
+
+/**
+ * 生成日(2位).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateDayDD() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_mday);
+  return datum;
+}
+
+/**
+ * 生成日(中文).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateDayCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  return ToComplexNumericCN(timeinfo.tm_mday);
+}
+
+/**
+ * 生成时(24小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateFullhour() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_hour);
+  return datum;
+}
+
+/**
+ * 生成时(2位24小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateFullhourHH() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_hour);
+  return datum;
+}
+
+/**
+ * 生成时(中文24小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateFullhourCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  return ToComplexNumericCN(timeinfo.tm_hour);
+}
+
+/**
+ * 生成时(12小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateHalfhour() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  if (timeinfo.tm_hour >= 12)
+    timeinfo.tm_hour -= 12;
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_hour);
+  return datum;
+}
+
+/**
+ * 生成时(2位12小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateHalfhourHH() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  if (timeinfo.tm_hour >= 12)
+    timeinfo.tm_hour -= 12;
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_hour);
+  return datum;
+}
+
+/**
+ * 生成时(中文12小时制).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateHalfhourCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  if (timeinfo.tm_hour >= 12)
+    timeinfo.tm_hour -= 12;
+  return ToComplexNumericCN(timeinfo.tm_hour);
+}
+
+/**
+ * 生成分.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMinute() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_min);
+  return datum;
+}
+
+/**
+ * 生成分(2位).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMinuteMM() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_min);
+  return datum;
+}
+
+/**
+ * 生成分(中文).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateMinuteCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  return ToComplexNumericCN(timeinfo.tm_min);
+}
+
+/**
+ * 生成秒.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateSecond() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_sec);
+  return datum;
+}
+
+/**
+ * 生成秒(2位).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateSecondSS() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%02d", timeinfo.tm_sec);
+  return datum;
+}
+
+/**
+ * 生成秒(中文).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateSecondCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  return ToComplexNumericCN(timeinfo.tm_sec);
+}
+
+/**
+ * 生成星期.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateWeekday() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  char *datum = NULL;
+  asprintf(&datum, "%d", timeinfo.tm_wday);
+  return datum;
+}
+
+/**
+ * 生成星期(中文).
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateWeekdayCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  const char *datum = ToWeekdayCN(timeinfo.tm_wday);
+  return strdup(datum);
+}
+
+/**
+ * 生成AM/PM.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateAMPM() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  const char *datum = ToAMPM(timeinfo.tm_hour);
+  return strdup(datum);
+}
+
+/**
+ * 生成上午/下午.
+ * @return 数据串
+ */
+char *DynamicPhrase::GenerateAMPMCN() {
+  time_t tt = time(NULL);
+  struct tm timeinfo;
+  localtime_r(&tt, &timeinfo);
+  const char *datum = ToAMPMCN(timeinfo.tm_hour);
+  return strdup(datum);
 }
 
 /**

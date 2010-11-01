@@ -76,10 +76,12 @@ class DynamicPhrase {
   /**
    * 数据生成函数.
    */
-  typedef char *(*GenerateDatumFunc)();
+  typedef char *(DynamicPhrase::*GenerateDatumFunc)();
 
   DynamicPhrase();
   ~DynamicPhrase();
+
+  void RegisterFunction();
 
   PhraseDatum *CreatePhraseDatum(const char *expression) const;
 
@@ -87,6 +89,28 @@ class DynamicPhrase {
   char *GenerateYearYY();
   char *GenerateYearCN();
   char *GenerateYearYYCN();
+  char *GenerateMonth();
+  char *GenerateMonthMM();
+  char *GenerateMonthCN();
+  char *GenerateDay();
+  char *GenerateDayDD();
+  char *GenerateDayCN();
+  char *GenerateFullhour();
+  char *GenerateFullhourHH();
+  char *GenerateFullhourCN();
+  char *GenerateHalfhour();
+  char *GenerateHalfhourHH();
+  char *GenerateHalfhourCN();
+  char *GenerateMinute();
+  char *GenerateMinuteMM();
+  char *GenerateMinuteCN();
+  char *GenerateSecond();
+  char *GenerateSecondSS();
+  char *GenerateSecondCN();
+  char *GenerateWeekday();
+  char *GenerateWeekdayCN();
+  char *GenerateAMPM();
+  char *GenerateAMPMCN();
 
   char *ToSimpleNumericCN(int number, int amount);
   char *ToComplexNumericCN(int number);
