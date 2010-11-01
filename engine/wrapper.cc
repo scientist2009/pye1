@@ -36,7 +36,7 @@ char *strchug(char *s) {
 
 /**
  * 移除串尾部的空白字符.
- * @param string 串
+ * @param s 串
  * @return 新串
  */
 char *strchomp(char *s) {

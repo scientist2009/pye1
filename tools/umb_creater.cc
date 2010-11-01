@@ -83,9 +83,9 @@ void UMBCreater::WritePhraseTree(const char *mb_file) {
 /**
  * 分割词语数据串.
  * @param string 数据串
- * @retval phrase 词语串
- * @retval pinyin 拼音串
- * @retval frequency 频率串
+ * @param phrase 词语串
+ * @param pinyin 拼音串
+ * @param frequency 频率串
  * @return 串是否合法
  */
 bool UMBCreater::BreakPhraseString(char *string, const char **phrase,

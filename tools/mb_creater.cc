@@ -88,9 +88,9 @@ void MBCreater::WritePhraseTree(const char *mb_file) {
 /**
  * 分割词语数据串.
  * @param string 数据串
- * @retval phrase 词语串
- * @retval pinyin 拼音串
- * @retval frequency 频率串
+ * @param phrase 词语串
+ * @param pinyin 拼音串
+ * @param frequency 频率串
  * @return 串是否合法
  */
 bool MBCreater::BreakPhraseString(char *string, const char **phrase,
@@ -227,7 +227,7 @@ std::list<PhraseDatum *> *MBCreater::SearchChildByLength(
  * 写出纯索引部分.
  * (最大索引值)-->(索引值,最大长度)-->(长度,总孩子数)-->(汉字代理数组).
  * @param fd 文件描述字
- * @retval offset 数据索引部分的偏移量
+ * @param offset 数据索引部分的偏移量
  * @return 总词语数
  */
 uint MBCreater::WritePureIndexPart(int fd, int *offset) {

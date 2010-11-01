@@ -201,8 +201,8 @@ bool PinyinEditor::RevokeSelectedPhrase() {
 
 /**
  * 获取原始串.
- * @retval text 原始串
- * @retval len 原始串长度
+ * @param text 原始串
+ * @param len 原始串长度
  * @return 执行状况
  */
 void PinyinEditor::GetRawText(char **text, int *len) {
@@ -219,8 +219,8 @@ void PinyinEditor::GetRawText(char **text, int *len) {
 
 /**
  * 获取提交数据.
- * @retval text 词语数据
- * @retval len 词语数据有效长度
+ * @param text 词语数据
+ * @param len 词语数据有效长度
  */
 void PinyinEditor::GetCommitText(char **text, int *len) {
   if (accepted_phrase_list_.empty()) {
@@ -255,8 +255,8 @@ void PinyinEditor::GetCommitText(char **text, int *len) {
 
 /**
  * 获取预编辑数据.
- * @retval text 词语数据
- * @retval len 词语数据有效长度
+ * @param text 词语数据
+ * @param len 词语数据有效长度
  */
 void PinyinEditor::GetPreeditText(char **text, int *len) {
   if (accepted_phrase_list_.empty() && cache_phrase_list_.empty()) {
@@ -305,8 +305,8 @@ void PinyinEditor::GetPreeditText(char **text, int *len) {
 
 /**
  * 获取辅助数据.
- * @retval text 词语数据
- * @retval len 词语数据有效长度
+ * @param text 词语数据
+ * @param len 词语数据有效长度
  */
 void PinyinEditor::GetAuxiliaryText(char **text, int *len) {
   if (accepted_phrase_list_.empty() && !chars_proxy_) {
@@ -363,7 +363,7 @@ void PinyinEditor::GetAuxiliaryText(char **text, int *len) {
 /**
  * 获取一个页面的词语数据.
  * @param pagesize 页面大小
- * @retval list 词语链表
+ * @param list 词语链表
  */
 void PinyinEditor::GetPagePhrase(int pagesize,
                                  std::list<const PhraseDatum *> *list) {
@@ -389,7 +389,7 @@ void PinyinEditor::GetPagePhrase(int pagesize,
 
 /**
  * 获取动态词语.
- * @retval list 词语链表
+ * @param list 词语链表
  */
 void PinyinEditor::GetDynamicPhrase(std::list<const PhraseDatum *> *list) {
   std::list<PhraseDatum *> phrase_datum_list;

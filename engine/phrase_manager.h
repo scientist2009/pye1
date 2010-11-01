@@ -77,6 +77,7 @@ class PhraseProxyStorage {
  */
 class PhraseManager {
  public:
+  /* 外部接口 */
   void CreateSystemPhraseProxySite(const char *config);
   void CreateUserPhraseProxySite(const char *mbfile);
   void AppendMendPinyinPair(const char *raw, const char *mend);

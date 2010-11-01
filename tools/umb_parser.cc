@@ -148,7 +148,7 @@ void UMBParser::WriteDatum(FILE *stream, const PhraseProxy *phrase_proxy) {
 /**
  * 分析词语代理所表达的词语数据.
  * @param phrase_proxy 词语代理
- * @retval phrase_datum 词语数据
+ * @param phrase_datum 词语数据
  */
 void UMBParser::AnalyzePhraseProxy(const PhraseProxy *phrase_proxy,
                                    PhraseDatum *phrase_datum) {

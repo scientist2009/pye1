@@ -23,6 +23,14 @@ do { \
     delete (*iterator); \
 } while (0)
 
+#define STL_FREE_DATA(Name,Type) \
+do { \
+  for (Type::iterator iterator = (Name).begin(); \
+       iterator != (Name).end(); \
+       ++iterator) \
+    free(*iterator); \
+} while (0)
+
 #define STL_FREE_KEY(Name,Type) \
 do { \
   for (Type::iterator iterator = (Name).begin(); \

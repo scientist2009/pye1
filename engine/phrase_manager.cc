@@ -381,8 +381,8 @@ PhraseManager::~PhraseManager() {
 /**
  * 分割码表文件信息串的各部分.
  * @param string 源串
- * @retval mbfile 码表文件
- * @retval priority 优先级
+ * @param mbfile 码表文件
+ * @param priority 优先级
  * @return 串是否合法
  */
 bool PhraseManager::BreakMbfileString(char *string, const char **mbfile,

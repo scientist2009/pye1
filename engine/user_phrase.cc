@@ -325,7 +325,7 @@ void UserPhrase::DeletePhraseFromTree(const PhraseDatum *phrase_datum) {
 
 /**
  * 增加指定词语的使用频率.
- * @param phrdt 词语数据
+ * @param phrase_datum 词语数据
  */
 void UserPhrase::IncreasePhraseFrequency(const PhraseDatum *phrase_datum) {
   /* 检查条件是否满足 */

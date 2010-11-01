@@ -99,8 +99,8 @@ PinyinParser::~PinyinParser() {
 /**
  * 分析拼音串.
  * @param pinyin 原始拼音串，e.g.<yumen,yu'men>
- * @retval chars_proxy 汉字代理数组
- * @retval length 汉字代理数组有效长度
+ * @param chars_proxy 汉字代理数组
+ * @param length 汉字代理数组有效长度
  * @return 是否分析成功
  */
 bool PinyinParser::ParsePinyin(const char *pinyin, CharsProxy **chars_proxy, int *length) {
@@ -192,9 +192,9 @@ int8_t PinyinParser::SearchMatchablePinyinUnitParts(const char *pinyin) {
 /**
  * 附加拼音单元部件到汉字代理数组.
  * @param chars_proxy 汉字代理数组
- * @retval offset 操作汉字代理数组的偏移量
+ * @param offset 操作汉字代理数组的偏移量
  * @param parts_index 拼音单元部件的索引值
- * @retval type 前一个拼音单元部件属性
+ * @param type 前一个拼音单元部件属性
  */
 void PinyinParser::AppendPinyinUnitParts(CharsProxy *chars_proxy,
                                          int *offset,
