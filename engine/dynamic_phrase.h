@@ -57,6 +57,7 @@ class DynamicPhrase {
  public:
   /* 外部接口 */
   void CreateExpression(const char *config);
+  void ClearExpression();
 
   void GetDynamicPhrase(const char *string,
                         std::list<PhraseDatum *> *list) const;

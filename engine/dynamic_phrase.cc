@@ -56,6 +56,18 @@ void DynamicPhrase::CreateExpression(const char *config) {
 }
 
 /**
+ * 清除表达式.
+ */
+void DynamicPhrase::ClearExpression() {
+  /* 定义映射表类型 */
+  typedef std::multimap<char *, char *, StringComparer> ExpressionMultimap;
+
+  STL_FREE_KEY(expression_, ExpressionMultimap);
+  STL_FREE_VALUE(expression_, ExpressionMultimap);
+  expression_.clear();
+}
+
+/**
  * 获取动态词语数据.
  * @param string 词语索引串
  * @param list 词语数据链表
