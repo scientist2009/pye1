@@ -406,14 +406,14 @@ void PinyinEditor::GetDynamicPhrase(std::list<const PhraseDatum *> *list) {
 }
 
 /**
- * 获取引擎合成词语.
+ * 获取引擎生成的词语.
  * @return 词语数据
  */
-const PhraseDatum *PinyinEditor::GetComposePhrase() {
+const PhraseDatum *PinyinEditor::GetEnginePhrase() {
   std::list<PhraseDatum *> phrase_datum_list;
   PhraseDatum *local_phrase_datum = NULL;
 
-  /* 获取合成词语的各部分词语数据 */
+  /* 获取引擎词语的各部分词语数据 */
   /*/* 第一个词语数据 */
   if (cache_phrase_list_.empty()) {
     PhraseProxyStorage *storage = SearchPreferPhrase();

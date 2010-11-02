@@ -91,9 +91,9 @@ mark1:
         free(data);
       }
 
-      const PhraseDatum *datum = pinyin_editor.GetComposePhrase();
+      const PhraseDatum *datum = pinyin_editor.GetEnginePhrase();
       if (datum) {
-        printf("ComposePhrase: ");
+        printf("EnginePhrase: ");
         PrintData(datum->raw_data_, datum->raw_data_length_);
         printf("\n");
       }

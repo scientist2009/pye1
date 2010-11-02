@@ -46,7 +46,7 @@ class PinyinEditor {
   void GetAuxiliaryText(char **text, int *len);
   void GetPagePhrase(int pagesize, std::list<const PhraseDatum *> *list);
   void GetDynamicPhrase(std::list<const PhraseDatum *> *list);
-  const PhraseDatum *GetComposePhrase();
+  const PhraseDatum *GetEnginePhrase();
   void SelectCachePhrase(const PhraseDatum *datum);
   void DeletePhraseData(const PhraseDatum *datum);
   void FeedbackSelectedPhrase();
