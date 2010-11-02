@@ -116,7 +116,7 @@ class DynamicPhrase {
   char *ToComplexNumericCN(int number);
 
   const char *ToDigitCN(char digit);
-  const char *ToUnitCN(int count, bool *part);
+  const char *ToDecimalCN(int decimal);
   const char *ToWeekdayCN(int weekday);
   const char *ToAMPM(int hour);
   const char *ToAMPMCN(int hour);

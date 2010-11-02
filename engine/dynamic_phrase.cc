@@ -544,7 +544,7 @@ char *DynamicPhrase::GenerateAMPMCN() {
 /**
  * 转换简单数值.
  * @param number 数值
- * @param amount 位数
+ * @param amount 总位数
  * @return 数值串
  */
 char *DynamicPhrase::ToSimpleNumericCN(int number, int amount) {
@@ -577,32 +577,36 @@ char *DynamicPhrase::ToComplexNumericCN(int number) {
   size_t length = strlen(buffer);
   char *datum = (char *)malloc(CHARS_MAX * length * 2 + 1);
   char *datum_ptr = datum;
-  bool zero_digit = false;
-  int units_count = length - 1;
-  for (const char *ptr = buffer; *ptr != '\0'; ++ptr, --units_count) {
+  bool zero_digit = false;  // 0数位标记
+  uint decimal = length;  // 当前位数
+  for (const char *ptr = buffer; *ptr != '\0'; ++ptr, --decimal) {
     if (*ptr != '0') {
+      /* e.g. 9009,909 */
       if (zero_digit) {
         strcpy(datum_ptr, "零");
         datum_ptr += strlen(datum_ptr);
         zero_digit = false;
       }
-      if (length != 2 || units_count != 1 || *ptr != '1') {
+      /* e.g. 19999,19 */
+      if (decimal != length || *ptr != '1' || length % 4 != 2) {
         strcpy(datum_ptr, ToDigitCN(*ptr));
         datum_ptr += strlen(datum_ptr);
       }
-      strcpy(datum_ptr, ToUnitCN(units_count, NULL));
+      strcpy(datum_ptr, ToDecimalCN(decimal));
       datum_ptr += strlen(datum_ptr);
     } else {
       zero_digit = true;
-      bool numeric_part = false;
-      const char *unit_datum = ToUnitCN(units_count, &numeric_part);
-      if (numeric_part) {
-        strcpy(datum_ptr, unit_datum);
+      /* e.g. 109999 */
+      if ((decimal - 1) % 4 == 0) {
+        strcpy(datum_ptr, ToDecimalCN(decimal));
         datum_ptr += strlen(datum_ptr);
         zero_digit = false;
       }
     }
   }
+  /* 特例, e.g. 0 */
+  if (length == 1 && buffer[0] == '0')
+    strcpy(datum, "零");
 
   return datum;
 }
@@ -631,21 +635,13 @@ const char *DynamicPhrase::ToDigitCN(char digit) {
 /**
  * 转换中文单位.
  * 参考孙子算经.
- * @param count 单位位数,从0开始计数
- * @param part 是否位计数节点
+ * @param decimal 当前位数
  * @return 单位串
  */
-const char *DynamicPhrase::ToUnitCN(int count, bool *part) {
-  /* 预设参数 */
-  if (part)
-    *part = false;
-
-  /* 单位换算 */
-  switch (count % 4) {
+const char *DynamicPhrase::ToDecimalCN(int decimal) {
+  switch ((decimal - 1) % 4) {
   case 0:
-    if (part)
-      *part = true;
-    switch (count / 4) {
+    switch (decimal / 4) {
       case 1: return "万";
       case 2: return "亿";
       case 3: return "兆";

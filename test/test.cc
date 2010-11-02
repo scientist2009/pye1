@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <string.h>
+#include "engine/dynamic_phrase.h"
 #include "engine/phrase_manager.h"
 #include "engine/pinyin_editor.h"
 
