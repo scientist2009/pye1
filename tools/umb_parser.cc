@@ -15,7 +15,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-#include "engine/wrapper.h"
+#include "engine/pye_wrapper.h"
 
 /**
  * 类构造函数.

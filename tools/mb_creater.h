@@ -17,8 +17,8 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <list>
-#include "engine/global.h"
 #include "engine/pinyin_parser.h"
+#include "engine/pye_global.h"
 
 /**
  * 词语数据资料.

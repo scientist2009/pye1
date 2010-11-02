@@ -1,4 +1,3 @@
-METASOURCES = AUTO
 noinst_PROGRAMS = test
 
 test_SOURCES = test.cc

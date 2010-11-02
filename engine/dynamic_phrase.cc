@@ -13,10 +13,10 @@
 #include <ctype.h>
 #include <errno.h>
 #include <time.h>
-#include "global.h"
-#include "output.h"
 #include "pinyin_parser.h"
-#include "wrapper.h"
+#include "pye_global.h"
+#include "pye_output.h"
+#include "pye_wrapper.h"
 
 /* 最大字符长度 */
 #define CHARS_MAX 6

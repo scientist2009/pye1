@@ -17,10 +17,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "output.h"
+#include "pye_output.h"
+#include "pye_wrapper.h"
 #include "system_phrase.h"
 #include "user_phrase.h"
-#include "wrapper.h"
 
 /**
  * 创建系统词语数据代理集合.

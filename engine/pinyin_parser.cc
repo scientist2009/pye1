@@ -14,8 +14,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include "global.h"
-#include "output.h"
+#include "pye_global.h"
+#include "pye_output.h"
 #define PINYIN_MAX 6
 
 /**

@@ -1,5 +1,5 @@
 //
-// C++ Interface: output
+// C++ Interface: pye_output
 //
 // Description:
 // 输出宏.
@@ -9,8 +9,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef PYE_ENGINE_OUTPUT_H_
-#define PYE_ENGINE_OUTPUT_H_
+#ifndef PYE_ENGINE_PYE_OUTPUT_H_
+#define PYE_ENGINE_PYE_OUTPUT_H_
 
 #ifdef HAVE_CONFIG_H
   #include <config.h>
@@ -40,4 +40,4 @@
 #define ptrace(format,...) ((void)0)
 #endif
 
-#endif  // PYE_ENGINE_OUTPUT_H_
+#endif  // PYE_ENGINE_PYE_OUTPUT_H_

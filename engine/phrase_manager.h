@@ -17,7 +17,7 @@
 #define PYE_ENGINE_PHRASE_MANAGER_H_
 
 #include "abstract_phrase.h"
-#include "global.h"
+#include "pye_global.h"
 
 /**
  * 外部拼音纠错对.

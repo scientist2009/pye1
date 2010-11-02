@@ -14,9 +14,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-#include "global.h"
-#include "output.h"
-#include "wrapper.h"
+#include "pye_global.h"
+#include "pye_output.h"
+#include "pye_wrapper.h"
 
 /**
  * 类构造函数.

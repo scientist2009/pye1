@@ -14831,7 +14831,7 @@ $as_echo "#define malloc rpl_malloc" >>confdefs.h
 fi
 
 
-for ac_func in bzero memmove strcspn strdup strerror strspn
+for ac_func in bzero localtime_r memmove strchr strcspn strdup strerror strndup strspn
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -17494,5 +17494,4 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
 

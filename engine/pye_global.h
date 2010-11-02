@@ -1,5 +1,5 @@
 //
-// C++ Interface: global
+// C++ Interface: pye_global
 //
 // Description:
 // 全局宏定义.
@@ -9,8 +9,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef PYE_ENGINE_GLOBAL_H_
-#define PYE_ENGINE_GLOBAL_H_
+#ifndef PYE_ENGINE_PYE_GLOBAL_H_
+#define PYE_ENGINE_PYE_GLOBAL_H_
 
 #define N_ARRAY_ELEMENTS(ArrayName) \
     (sizeof(ArrayName)/sizeof((ArrayName)[0]))
@@ -47,4 +47,4 @@ do { \
     free(iterator->second); \
 } while (0)
 
-#endif  // PYE_ENGINE_GLOBAL_H_
+#endif  // PYE_ENGINE_PYE_GLOBAL_H_

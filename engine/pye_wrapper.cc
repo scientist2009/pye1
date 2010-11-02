@@ -1,5 +1,5 @@
 //
-// C++ Implementation: wrapper
+// C++ Implementation: pye_wrapper
 //
 // Description:
 // 参见头文件描述.
@@ -9,7 +9,7 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#include "wrapper.h"
+#include "pye_wrapper.h"
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>

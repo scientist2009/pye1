@@ -1,4 +1,3 @@
-METASOURCES = AUTO
 bin_PROGRAMS = pye-create-mb pye-create-umb pye-parse-umb
 
 pye_create_mb_SOURCES = mb_creater.cc pye_create_mb.cc
