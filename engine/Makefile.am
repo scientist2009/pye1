@@ -4,11 +4,8 @@ libpye_la_SOURCES = dynamic_phrase.cc phrase_manager.cc pinyin_editor.cc \
                     pinyin_parser.cc pye_wrapper.cc system_phrase.cc \
                     user_phrase.cc
 
+AM_CPPFLAGS = -I$(top_srcdir)
 AM_CXXFLAGS = -Wall
-
-# set the include path found by configure
-
-# the library search path.
 
 pyeincludedir=$(includedir)/pye-0.2
 pyeinclude_HEADERS = abstract_phrase.h dynamic_phrase.h phrase_manager.h \
